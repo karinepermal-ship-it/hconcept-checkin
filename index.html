@@ -22,26 +22,44 @@
   <h2>HConcept Employee Check-In</h2>
 
   <a id="checkinLink"
-   href="https://script.google.com/macros/s/AKfycbzNmKN4zs5zdSUw38jSzKZSNJKJBEbggINZDnGcr_vtyK00IHcgWGEST-uF2pWQ44M3Ag/exec">
+     href="https://script.google.com/macros/s/AKfycbzNmKN4zs5zdSUw38jSzKZSNJKJBEbggINZDnGcr_vtyK00IHcgWGEST-uF2pWQ44M3Ag/exec"
      style="display:inline-block;padding:18px 26px;background:#0b7f6c;color:white;text-decoration:none;border-radius:12px;font-weight:bold;font-size:20px;">
     OPEN CHECK-IN
   </a>
 
-   <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
-  }
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const employee = params.get('employee');
 
-  const installedApp =
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true;
+    const validEmployees = [
+      'Akshay',
+      'Bradon',
+      'Fabien',
+      'Kem',
+      'Babooraj',
+      'Karine'
+    ];
 
-  if (installedApp) {
-    window.location.replace(
-      'https://script.google.com/macros/s/AKfycbzNmKN4zs5zdSUw38jSzKZSNJKJBEbggINZDnGcr_vtyK00IHcgWGEST-uF2pWQ44M3Ag/exec'
-    );
-  }
-</script>
+    let checkinUrl =
+      'https://script.google.com/macros/s/AKfycbzNmKN4zs5zdSUw38jSzKZSNJKJBEbggINZDnGcr_vtyK00IHcgWGEST-uF2pWQ44M3Ag/exec';
+
+    if (employee && validEmployees.includes(employee)) {
+      checkinUrl += '?employee=' + encodeURIComponent(employee);
+      document.getElementById('checkinLink').href = checkinUrl;
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+
+    const installedApp =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if (installedApp && employee && validEmployees.includes(employee)) {
+      window.location.replace(checkinUrl);
+    }
+  </script>
 
 </body>
 </html>
