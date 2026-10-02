@@ -26,11 +26,21 @@
     OPEN CHECK-IN
   </a>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js');
-    }
-  </script>
+   <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+
+  const installedApp =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  if (installedApp) {
+    window.location.replace(
+      'https://script.google.com/macros/s/AKfycbzNmKN4zs5zdSUw38jSzKZSNJKJBEbggINZDnGcr_vtyK00IHcgWGEST-uF2pWQ44M3Ag/exec'
+    );
+  }
+</script>
 
 </body>
 </html>
